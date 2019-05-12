@@ -1,7 +1,6 @@
 package livraria.ifma.edu.livrariaweb.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table (name = "livro")
@@ -10,7 +9,6 @@ public class LivroModel  {
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-
 
     public LivroModel() {
     }

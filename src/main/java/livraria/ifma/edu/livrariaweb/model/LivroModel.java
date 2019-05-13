@@ -1,6 +1,7 @@
 package livraria.ifma.edu.livrariaweb.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table (name = "livro")
@@ -8,6 +9,8 @@ public class LivroModel  {
 
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotNull
     private String nome;
 
     public LivroModel() {

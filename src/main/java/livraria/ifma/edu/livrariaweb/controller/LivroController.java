@@ -1,12 +1,17 @@
 package livraria.ifma.edu.livrariaweb.controller;
 
+import livraria.ifma.edu.livrariaweb.controller.io.Response;
 import livraria.ifma.edu.livrariaweb.dto.LivroDTO;
 import livraria.ifma.edu.livrariaweb.model.LivroModel;
 import livraria.ifma.edu.livrariaweb.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -26,9 +31,20 @@ public class LivroController {
     }
 
     @PostMapping ("/SalvarLivro")
-    @ResponseStatus(HttpStatus.CREATED)
-    public LivroModel Salvar (@RequestBody LivroModel livro) {
-        return livroService.Salvar(livro);
+    public ResponseEntity<Response<LivroModel>> Salvar (@Valid @RequestBody LivroModel livro)
+    {
+        final LivroModel livroSalvo = livroService.Salvar(livro);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequestUri()
+                .path("/{id}")
+                .buildAndExpand(livroSalvo.getId())
+                .toUri();
+
+        Response<LivroModel> resposta = new  Response<>();
+        resposta.setDados(livroSalvo);
+
+        return ResponseEntity.created(uri).body(resposta);
     }
 
     @PostMapping ("/SalvarLivros")

@@ -25,11 +25,12 @@ public class LivroService {
     }
 
     @Transactional(readOnly = true)
-    public List<LivroDTO> ObterTodos() {
+    public List<LivroModel> ObterTodos() {
         List<LivroModel> retorno  = livroRepository.findAll();
 
-        Type listType = new TypeToken<List<LivroDTO>>() {}.getType();
-        return new ModelMapper().map(retorno, listType);
+        //Type listType = new TypeToken<List<LivroDTO>>() {}.getType();
+        //return new ModelMapper().map(retorno, listType);
+        return retorno;
     }
 
     @Transactional

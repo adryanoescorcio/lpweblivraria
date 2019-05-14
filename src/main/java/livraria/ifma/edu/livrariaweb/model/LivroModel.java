@@ -10,7 +10,6 @@ public class LivroModel  {
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull
     private String nome;
 
     public LivroModel() {

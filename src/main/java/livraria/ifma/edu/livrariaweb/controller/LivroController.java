@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,8 +27,18 @@ public class LivroController {
     }
 
     @GetMapping
-    public List<LivroDTO> ObterTodos() {
-        return livroService.ObterTodos();
+    public ResponseEntity<Response<List<LivroDTO>>> ObterTodos() {
+
+        List<LivroModel> livros =  livroService.ObterTodos();
+        List<LivroDTO> livrosDto = new ArrayList<>(livros.size());
+
+        livros.forEach(livro -> livrosDto.add(new LivroDTO().getModel2Dto(livro)));
+
+        Response<List<LivroDTO>> resposta = new  Response<>();
+        resposta.setDados(livrosDto);
+
+        return ResponseEntity.ok(resposta);
+
     }
 
     @PostMapping ("/SalvarLivro")
@@ -45,12 +56,6 @@ public class LivroController {
         resposta.setDados(livroSalvo);
 
         return ResponseEntity.created(uri).body(resposta);
-    }
-
-    @PostMapping ("/SalvarLivros")
-    @ResponseStatus(HttpStatus.CREATED)
-    public List<LivroModel> Salvar (@RequestBody List<LivroModel> livros) {
-        return livroService.Salvar(livros);
     }
 
     @GetMapping("/{idLivro}")

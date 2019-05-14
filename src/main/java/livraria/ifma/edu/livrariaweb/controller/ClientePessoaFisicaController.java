@@ -32,12 +32,6 @@ public class ClientePessoaFisicaController {
         return clientePessoaFisicaService.Salvar(cliente);
     }
 
-    @PostMapping ("/SalvarClientes")
-    @ResponseStatus(HttpStatus.CREATED)
-    public List<ClientePessoaFisicaModel> Salvar (@RequestBody List<ClientePessoaFisicaModel> clientes) {
-        return clientePessoaFisicaService.Salvar(clientes);
-    }
-
     @GetMapping("/{idCliente}")
     public ClientePessoaFisicaModel ObterPor(@PathVariable Integer idCliente) {
         return clientePessoaFisicaService.ObterPor(idCliente);
